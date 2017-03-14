@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Weather</title>
+</head>
+<div class="jumbotron" style="text-align: center;">
+    <h1>Weather</h1>
+    <h3 style="font-style: italic; color:pink;text-decoration: underline;">What it is like outside.</h3>
+</div>
+
+<body>
+    <div ng-app="app">
+        <div ng-controller="weather as weather">
+            <!--Buttons with preset Locaions-->
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-info btn-secondary" ng-click="weather.callSanDiego()">San Diego</button>
+                <button type="button" class="btn btn-info btn-secondary" ng-click="weather.callBerlin()">Berlin</button>
+                <button type="button" class="btn btn-info btn-secondary" ng-click="weather.callSeattle()">Seattle</button>
+                <button type="button" class="btn btn-info btn-secondary" ng-click="weather.callTehran()">Tehran</button>
+                <button type="button" class="btn btn-info btn-secondary" ng-click="weather.callBeijing()">Beijing</button>
+            </div>
+
+            <!--Search bar with button-->
+            <div>
+                <form name="citySearch">
+                    <div class="col-lg-12">
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="weather.cityInput" placeholder="Search for..." required>
+                            <span class="input-group-btn">
+                    <button class="btn btn-secondary" type="button" ng-click="weather.callApi()" ng-disabled="citySearch.$invalid">Go!</button> <!--Should require input field to submit-->
+                  </span>
+                        </div>
+                    </div>
+            </div>
+            <!--City Information-->
+            <div class="col-md-6">
+                <div class="panel panel-info top-buffer">
+                    <div class="panel-heading">City Information</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <h3>{{weather.cityData.name}}</h3></td>
+                                </tr>
+                                <tr>
+                                    <td>Lon/Lat: {{weather.cityData.coord.lon+','+weather.cityData.coord.lat}}</td>
+                                </tr>
+                            </table>
+                            <table class="table table-inverse">
+                                <tr>
+                                    <th>Temp</th>
+                                    <th>Pressure</th>
+                                    <th>Humidity</th>
+                                </tr>
+                                <tr>
+                                    <th>{{weather.cityData.main.temp}}K</th>
+                                    <th>{{weather.cityData.main.pressure}}</th>
+                                    <th>{{weather.cityData.main.humidity}}</th>
+                                </tr>
+                                <tr>
+                                    <th>Lowest Temp</th>
+                                    <th>Highest Temp</th>
+                                    <th>Wind Speed</th>
+                                </tr>
+                                <tr>
+                                    <th>{{weather.cityData.main.temp_min}}K</th>
+                                    <th>{{weather.cityData.main.temp_max}}K</th>
+                                    <th>{{weather.cityData.wind.speed}}</th>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Search History-->
+            <div class="col-md-6">
+                <div class="panel panel-info top-buffer">
+                    <div class="panel-heading">Search History</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <table class="table table-striped">
+                                <tbody>
+                                    <tr ng-repeat="item in weather.history">
+                                        <td>{{item.city}}</td>
+                                        <td>{{item.dateTime}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end tags and script-->
+        </div>
+    </div>
+    <script src="angular.min.js"></script>
+    <script src="app/app.module.js"></script>
+    <script src="app/weather/weather.controller.js"></script>
+    <link rel="stylesheet" type="text/css" href="bower_components/angular-toastr/dist/angular-toastr.css" />
+    <script type="text/javascript" src="bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</body>
+
+</html>
